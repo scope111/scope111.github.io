@@ -79,17 +79,14 @@
 
 
 
-<meta name="description" content="@TOC 1基本概念1.JVM包括一套字节码指令集、一组寄存器、一个栈、一个垃圾回收、堆、一个存储方法域。 2运行过程1.Java源文件-编译器-字节码文件（.class）-JVM中的解释器-机器码。每一种平台解释器不同，实现的虚拟机相同，所以JAVA可以跨平台。一个程序开始运行，启动一个虚拟机，多个程序运行，启动多个虚拟机，程序关闭，虚拟机消亡。每个虚拟机之间的数据不能共享。 3线程JVM允许一">
 <meta property="og:type" content="website">
-<meta property="og:title" content="JVM基本概念">
+<meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://yoursite.com/JVM基本概念/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="@TOC 1基本概念1.JVM包括一套字节码指令集、一组寄存器、一个栈、一个垃圾回收、堆、一个存储方法域。 2运行过程1.Java源文件-编译器-字节码文件（.class）-JVM中的解释器-机器码。每一种平台解释器不同，实现的虚拟机相同，所以JAVA可以跨平台。一个程序开始运行，启动一个虚拟机，多个程序运行，启动多个虚拟机，程序关闭，虚拟机消亡。每个虚拟机之间的数据不能共享。 3线程JVM允许一">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-18T14:18:27.960Z">
+<meta property="og:updated_time" content="2019-07-18T14:25:44.102Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM基本概念">
-<meta name="twitter:description" content="@TOC 1基本概念1.JVM包括一套字节码指令集、一组寄存器、一个栈、一个垃圾回收、堆、一个存储方法域。 2运行过程1.Java源文件-编译器-字节码文件（.class）-JVM中的解释器-机器码。每一种平台解释器不同，实现的虚拟机相同，所以JAVA可以跨平台。一个程序开始运行，启动一个虚拟机，多个程序运行，启动多个虚拟机，程序关闭，虚拟机消亡。每个虚拟机之间的数据不能共享。 3线程JVM允许一">
+<meta name="twitter:title" content="Hexo">
 
 
 
@@ -125,7 +122,7 @@
 
 
 
-  <title>JVM基本概念 | Hexo</title>
+  <title> | Hexo</title>
   
 
 
@@ -225,7 +222,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">JVM基本概念</h1>
+	<h1 class="post-title" itemprop="name headline"></h1>
 
 
 
@@ -237,11 +234,7 @@
       <div class="post-body">
         
         
-          <p>@<a href="JVM">TOC</a></p>
-<h1 id="1基本概念"><a href="#1基本概念" class="headerlink" title="1基本概念"></a>1基本概念</h1><p>1.JVM包括一套字节码指令集、一组寄存器、一个栈、一个垃圾回收、堆、一个存储方法域。</p>
-<h1 id="2运行过程"><a href="#2运行过程" class="headerlink" title="2运行过程"></a>2运行过程</h1><p>1.Java源文件-编译器-字节码文件（.class）-JVM中的解释器-机器码。<br>每一种平台解释器不同，实现的虚拟机相同，所以JAVA可以跨平台。一个程序开始运行，启动一个虚拟机，多个程序运行，启动多个虚拟机，程序关闭，虚拟机消亡。每个虚拟机之间的数据不能共享。</p>
-<h1 id="3线程"><a href="#3线程" class="headerlink" title="3线程"></a>3线程</h1><p>JVM允许一个应用并发多个线程。<br>JAVA线程准备好后，会创建操作系统原生线程。JAVA线程结束，原生线程被回收。操作系统负责调度线程并分配到可用CPU上。原生线程初始化完毕，会调用JAVA的run()方法。线程结束，会释放原生线程和JAVA线程的所有资源。</p>
-
+          
         
       </div>
       
@@ -283,17 +276,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -326,22 +310,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1基本概念"><span class="nav-number">1.</span> <span class="nav-text">1基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2运行过程"><span class="nav-number">2.</span> <span class="nav-text">2运行过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3线程"><span class="nav-number">3.</span> <span class="nav-text">3线程</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
