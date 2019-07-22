@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/JVM基本概念/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/JVM内存区域/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="scope">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/07/18/JVM基本概念/" itemprop="url">JVM基本概念</a></h1>
+                <a class="post-title-link" href="/2019/07/18/JVM内存区域/" itemprop="url">JVM内存区域</a></h1>
         
 
         <div class="post-meta">
@@ -260,7 +260,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-18T22:06:36+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-18T22:07:43+08:00">
                 2019-07-18
               </time>
             
@@ -300,10 +300,12 @@
       
         
           
-            <p>@<a href="JVM">TOC</a></p>
-<h1 id="1基本概念"><a href="#1基本概念" class="headerlink" title="1基本概念"></a>1基本概念</h1><p>1.JVM包括一套字节码指令集、一组寄存器、一个栈、一个垃圾回收、堆、一个存储方法域。</p>
-<h1 id="2运行过程"><a href="#2运行过程" class="headerlink" title="2运行过程"></a>2运行过程</h1><p>1.Java源文件-编译器-字节码文件（.class）-JVM中的解释器-机器码。<br>每一种平台解释器不同，实现的虚拟机相同，所以JAVA可以跨平台。一个程序开始运行，启动一个虚拟机，多个程序运行，启动多个虚拟机，程序关闭，虚拟机消亡。每个虚拟机之间的数据不能共享。</p>
-<h1 id="3线程"><a href="#3线程" class="headerlink" title="3线程"></a>3线程</h1><p>JVM允许一个应用并发多个线程。<br>JAVA线程准备好后，会创建操作系统原生线程。JAVA线程结束，原生线程被回收。操作系统负责调度线程并分配到可用CPU上。原生线程初始化完毕，会调用JAVA的run()方法。线程结束，会释放原生线程和JAVA线程的所有资源。</p>
+            <h1 id="4JVM内存区域"><a href="#4JVM内存区域" class="headerlink" title="4JVM内存区域"></a>4JVM内存区域</h1><p>线程私有区域（程序计数器、虚拟机栈、本地方法区） 生命周期与线程相同，依赖用户线程的启动/结束而创建/销毁。<br>线程共享区域（JAVA堆、方法区） 随虚拟机的启动/关闭 而创建/销毁。<br>直接内存并不是 JVM 运行时数据区的一部分, 但也会被频繁的使用。<br><img src="https://img-blog.csdnimg.cn/20190327110651833.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Njb3BlMTE=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="4-1程序计数器"><a href="#4-1程序计数器" class="headerlink" title="4.1程序计数器"></a>4.1程序计数器</h2><p>一块较小的内存空间，是当前线程==所执行字节码==的行号计数器。每一条线程都有一个计数器。</p>
+<h2 id="4-2-虚拟机栈"><a href="#4-2-虚拟机栈" class="headerlink" title="4.2 虚拟机栈"></a>4.2 虚拟机栈</h2><p>是描述java方法执行的内存模型，每个方法在执行的同时都会创建一个栈帧（Stack Frame）<br>用于存储局部变量表、操作数栈、动态链接、方法出口等信息。每一个方法从调用直至执行完成<br>的过程，就对应着一个栈帧在虚拟机栈中入栈到出栈的过程。 栈帧随着方法创建而创建，随着方法结束而结束。</p>
+<h2 id="4-3-本地方法区"><a href="#4-3-本地方法区" class="headerlink" title="4.3 本地方法区"></a>4.3 本地方法区</h2><p>和虚拟机栈类似，虚拟机栈为JAVA方法服务，本地方法栈为Native（本地）方法服务。</p>
+<h2 id="4-4堆（新生代和老年代）"><a href="#4-4堆（新生代和老年代）" class="headerlink" title="4.4堆（新生代和老年代）"></a>4.4堆（新生代和老年代）</h2><p>是被线程共享的一块内存区域，创建的对象和数组都保存在 Java 堆内存中，也是垃圾收集器进行垃圾收集的最重要的内存区域。<img src="https://img-blog.csdnimg.cn/20190327110741631.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Njb3BlMTE=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="4-5-方法区（永久代）"><a href="#4-5-方法区（永久代）" class="headerlink" title="4.5 方法区（永久代）"></a>4.5 方法区（永久代）</h2><p>即我们常说的永久代(Permanent Generation), 用于存储被 JVM 加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。HotSpot VM把GC分代收集扩展至方法区, 即使用Java堆的永久代来实现方法区, 这样 HotSpot 的垃圾收集器就可以像管理 Java 堆一样管理这部分内存, 而不必为方法区开发专门的内存管理器(永久带的内存回收的主要目标是针对==常量池的回收和类型的卸载,== 因此收益一般很小)。</p>
 
           
         
@@ -343,7 +345,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -389,7 +391,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

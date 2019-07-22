@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/JAVA四种引用类型/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/垃圾回收器/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="scope">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/07/18/JAVA四种引用类型/" itemprop="url">JAVA四种引用类型</a></h1>
+                <a class="post-title-link" href="/2019/07/18/垃圾回收器/" itemprop="url">垃圾回收器</a></h1>
         
 
         <div class="post-meta">
@@ -260,7 +260,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-18T22:10:33+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-18T22:11:09+08:00">
                 2019-07-18
               </time>
             
@@ -300,10 +300,20 @@
       
         
           
-            <h1 id="7JAVA四种引用类型"><a href="#7JAVA四种引用类型" class="headerlink" title="7JAVA四种引用类型"></a>7JAVA四种引用类型</h1><h2 id="7-1强引用"><a href="#7-1强引用" class="headerlink" title="7.1强引用"></a>7.1强引用</h2><p>Java 中最常见的就是强引用，把==一个对象赋给一个引用变量==，这个引用变量就是一个强引用。==当一个对象被强引用变量引用时，它处于可达状态，它是不可能被垃圾回收机制回收的，即使该对象以后永远都不会被用到 JVM 也不会回收==。因此强引用是造成 ==Java 内存泄漏的主要原因之一==。</p>
-<h2 id="7-2软引用（描述有用但非必需的对象）解决OOM问题"><a href="#7-2软引用（描述有用但非必需的对象）解决OOM问题" class="headerlink" title="7.2软引用（描述有用但非必需的对象）解决OOM问题"></a>7.2软引用（描述有用但非必需的对象）解决OOM问题</h2><p>软引用需要用 ==SoftReference== 类来实现，对于只有软引用的对象来说，当系统内存足够时它不会被回收，==当系统内存空间不足时它会被回收==。软引用通常用在对内存敏感的程序中。 </p>
-<h2 id="7-3-弱引用（描述非必需对象）解决OOM问题"><a href="#7-3-弱引用（描述非必需对象）解决OOM问题" class="headerlink" title="7.3 弱引用（描述非必需对象）解决OOM问题"></a>7.3 弱引用（描述非必需对象）解决OOM问题</h2><p>弱引用需要用 ==WeakReference== 类来实现，它比软引用的生存期更短，对于只有弱引用的对象来说，只要垃圾回收机制一运行，不管 JVM 的内存空间是否足够，==总会回收该对象占用的内存==</p>
-<h2 id="7-4虚引用"><a href="#7-4虚引用" class="headerlink" title="7.4虚引用"></a>7.4虚引用</h2><p>虚引用需要== PhantomReference== 类来实现，它不能单独使用，==必须和引用队列联合使用==。虚引用的主要作用是==跟踪对象被垃圾回收的状态==。</p>
+            <h1 id="8垃圾回收器"><a href="#8垃圾回收器" class="headerlink" title="8垃圾回收器"></a>8垃圾回收器</h1><p><img src="https://img-blog.csdnimg.cn/20190401113414398.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Njb3BlMTE=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="8-1-Serial-垃圾收集器（单线程、-复制-算法）"><a href="#8-1-Serial-垃圾收集器（单线程、-复制-算法）" class="headerlink" title="8.1 Serial 垃圾收集器（单线程、==复制==算法）"></a>8.1 Serial 垃圾收集器（单线程、==复制==算法）</h2><p>最基本的垃圾回收器。在收集垃圾过程中需要==暂停所有其他的工作线程==，它简单高效，是 java 虚拟机运行在 ==Client== 模式下默认的==新生代==垃圾收集器。</p>
+<h2 id="8-2-ParNew-垃圾收集器（Serial-多线程-复制）"><a href="#8-2-ParNew-垃圾收集器（Serial-多线程-复制）" class="headerlink" title="8.2 ParNew 垃圾收集器（Serial+多线程+复制）"></a>8.2 ParNew 垃圾收集器（Serial+多线程+复制）</h2><p>除了多线程外，其他和Serial一样，工作时也需要暂停所有的其他工作线程。很多 java虚拟机运行在 ==Server== 模式下==新生代==的默认垃圾收集器。</p>
+<h2 id="8-3Parallel-Scavenge-收集器（多线程复制算法、高效）"><a href="#8-3Parallel-Scavenge-收集器（多线程复制算法、高效）" class="headerlink" title="8.3Parallel Scavenge 收集器（多线程复制算法、高效）"></a>8.3Parallel Scavenge 收集器（多线程复制算法、高效）</h2><p>它重点关注的是程序达到一个==可控制的吞吐量==（Thoughput，CPU 用于运行用户代码的时间/CPU 总消耗时间，即吞吐量=运行用户代码时间/(运行用户代码时间+垃圾收集时间)），高吞吐量可以最高效率地利用 CPU 时间，尽快地完成程序的运算任务，主要适用于在后台运算而不需要太多交互的任务。==自适应调节策略==也是 ParallelScavenge 收集器与 ParNew 收集器的一个重要区别。 ==新生代==</p>
+<h2 id="8-4Serial-Old-收集器（-单线程标记整理-算法-）"><a href="#8-4Serial-Old-收集器（-单线程标记整理-算法-）" class="headerlink" title="8.4Serial Old 收集器（==单线程标记整理==算法 ）"></a>8.4Serial Old 收集器（==单线程标记整理==算法 ）</h2><p>Serial Old 是 Serial 垃圾收集器==年老代==版本，它同样是个单线程的收集器，使用标记-整理算法，这个收集器也主要是运行在 ==Client ==默认的 java 虚拟机默认的年老代垃圾收集器。<br>新生代 Serial 与年老代 Serial Old 搭配垃圾收集过程图：<br><img src="https://img-blog.csdnimg.cn/20190401114557410.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Njb3BlMTE=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>新生代 Parallel Scavenge/ParNew 与年老代 Serial Old 搭配垃圾收集过程图：<br><img src="https://img-blog.csdnimg.cn/20190401114710901.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Njb3BlMTE=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="8-5Parallel-Old-收集器（多线程标记整理算法）"><a href="#8-5Parallel-Old-收集器（多线程标记整理算法）" class="headerlink" title="8.5Parallel Old 收集器（多线程标记整理算法）"></a>8.5Parallel Old 收集器（多线程标记整理算法）</h2><p>Parallel Old 正是为了在年老代同样提供==吞吐量优先==的垃圾收集器，<br>新生代 Parallel Scavenge 和年老代 Parallel Old 收集器搭配运行过程图：<br><img src="https://img-blog.csdnimg.cn/20190401120022495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Njb3BlMTE=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="8-6CMS-收集器（-多线程标记清除算法-）"><a href="#8-6CMS-收集器（-多线程标记清除算法-）" class="headerlink" title="8.6CMS 收集器（==多线程标记清除算法==）"></a>8.6CMS 收集器（==多线程标记清除算法==）</h2><p>Concurrent mark sweep(CMS)收集器是一种年老代垃圾收集器，其最主要目标是==获取最短垃圾回收停顿时间==，和其他年老代使用标记-整理算法不同，它使用多线程的标记-清除算法。==最短的垃圾收集停顿时间==可以为交互比较高的程序提高用户体验。<br>1.初始标记<br>只是标记一下 GC Roots 能直接关联的对象，速度很快，仍然需要==暂停==所有的工作线程。</p>
+<ol start="2">
+<li>并发标记<br>进行 GC Roots 跟踪的过程，和用户线程一起工作，==不需要暂停==工作线程。</li>
+<li>重新标记<br>为了修正在并发标记期间，因用户程序继续运行而导致标记产生变动的那一部分对象的标记记录，仍然需要==暂停==所有的工作线程。</li>
+<li>并发清除<br>清除 GC Roots 不可达对象，和用户线程一起工作，不需要暂停工作线程。由于==耗时最长的并发标记和并发清除==过程中，垃圾收集线程可以和用户现在一起并发工作，所以总体上来看CMS 收集器的内存回收和用户线程是==一起==并发地执行。<br>CMS 收集器工作过程：<br><img src="https://img-blog.csdnimg.cn/2019040112041518.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Njb3BlMTE=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><h2 id="8-7-G1-收集器"><a href="#8-7-G1-收集器" class="headerlink" title="8.7 G1 收集器"></a>8.7 G1 收集器</h2>Garbage first 垃圾收集器是目前垃圾收集器理论发展的最前沿成果，相比与 CMS 收集器，G1 收集器两个最突出的改进是：</li>
+<li>==基于标记-整理算法，不产生内存碎片==。</li>
+<li>可以==非常精确控制停顿时间==，在不牺牲吞吐量前提下，实现低停顿垃圾回收。G1 收集器避免全区域垃圾收集，它把堆内存划分为大小固定的几个独立区域，并且跟踪这些区域的垃圾收集进度，同时在后台维护一个优先级列表，每次根据所允许的收集时间，优先回收垃圾最多的区域。==区域划分==和==优先级区域回收机制==，确保 G1 收集器可以在有限时间获得==最高的垃圾收集效率==。</li>
+</ol>
 
           
         
@@ -343,7 +353,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -389,7 +399,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/JVM内存区域/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/JVM运行时内存/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="scope">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/07/18/JVM内存区域/" itemprop="url">JVM内存区域</a></h1>
+                <a class="post-title-link" href="/2019/07/18/JVM运行时内存/" itemprop="url">JVM运行时内存</a></h1>
         
 
         <div class="post-meta">
@@ -260,7 +260,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-18T22:07:43+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-18T22:09:08+08:00">
                 2019-07-18
               </time>
             
@@ -300,12 +300,9 @@
       
         
           
-            <h1 id="4JVM内存区域"><a href="#4JVM内存区域" class="headerlink" title="4JVM内存区域"></a>4JVM内存区域</h1><p>线程私有区域（程序计数器、虚拟机栈、本地方法区） 生命周期与线程相同，依赖用户线程的启动/结束而创建/销毁。<br>线程共享区域（JAVA堆、方法区） 随虚拟机的启动/关闭 而创建/销毁。<br>直接内存并不是 JVM 运行时数据区的一部分, 但也会被频繁的使用。<br><img src="https://img-blog.csdnimg.cn/20190327110651833.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Njb3BlMTE=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h2 id="4-1程序计数器"><a href="#4-1程序计数器" class="headerlink" title="4.1程序计数器"></a>4.1程序计数器</h2><p>一块较小的内存空间，是当前线程==所执行字节码==的行号计数器。每一条线程都有一个计数器。</p>
-<h2 id="4-2-虚拟机栈"><a href="#4-2-虚拟机栈" class="headerlink" title="4.2 虚拟机栈"></a>4.2 虚拟机栈</h2><p>是描述java方法执行的内存模型，每个方法在执行的同时都会创建一个栈帧（Stack Frame）<br>用于存储局部变量表、操作数栈、动态链接、方法出口等信息。每一个方法从调用直至执行完成<br>的过程，就对应着一个栈帧在虚拟机栈中入栈到出栈的过程。 栈帧随着方法创建而创建，随着方法结束而结束。</p>
-<h2 id="4-3-本地方法区"><a href="#4-3-本地方法区" class="headerlink" title="4.3 本地方法区"></a>4.3 本地方法区</h2><p>和虚拟机栈类似，虚拟机栈为JAVA方法服务，本地方法栈为Native（本地）方法服务。</p>
-<h2 id="4-4堆（新生代和老年代）"><a href="#4-4堆（新生代和老年代）" class="headerlink" title="4.4堆（新生代和老年代）"></a>4.4堆（新生代和老年代）</h2><p>是被线程共享的一块内存区域，创建的对象和数组都保存在 Java 堆内存中，也是垃圾收集器进行垃圾收集的最重要的内存区域。<img src="https://img-blog.csdnimg.cn/20190327110741631.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Njb3BlMTE=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h2 id="4-5-方法区（永久代）"><a href="#4-5-方法区（永久代）" class="headerlink" title="4.5 方法区（永久代）"></a>4.5 方法区（永久代）</h2><p>即我们常说的永久代(Permanent Generation), 用于存储被 JVM 加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。HotSpot VM把GC分代收集扩展至方法区, 即使用Java堆的永久代来实现方法区, 这样 HotSpot 的垃圾收集器就可以像管理 Java 堆一样管理这部分内存, 而不必为方法区开发专门的内存管理器(永久带的内存回收的主要目标是针对==常量池的回收和类型的卸载,== 因此收益一般很小)。</p>
+            <h1 id="5-JVM运行时内存"><a href="#5-JVM运行时内存" class="headerlink" title="5 JVM运行时内存"></a>5 JVM运行时内存</h1><h2 id="5-1新生代"><a href="#5-1新生代" class="headerlink" title="5.1新生代"></a>5.1新生代</h2><p>用来存放新生的对象。占据堆的1/3空间，频繁创建对象所以频繁触发GC。新生代又分为 Eden 区、ServivorFrom、ServivorTo 三个区。<br>Eden区。Java==新对象的出生地（如果新创建的对象占用内存很大，则直接分配到老年代）。当 Eden 区内存不够的时候就会触发 MinorGC，对新生代区进行一次垃圾回收。8/10.<br>ServivorFrom上一次 GC 的幸存者，作为这一次 GC 的被扫描者。<br>ServivorTo保留了一次 MinorGC 过程中的幸存者。<br>MinorGC 的过程（==复制-&gt;清空-&gt;互换==） MinorGC采用复制算法。<br>1：eden、servicorFrom 复制到 ServicorTo，年龄+1<br>2：清空 eden、servicorFrom<br>3：ServicorTo 和 ServicorFrom 互换</p>
+<h2 id="5-2老年代"><a href="#5-2老年代" class="headerlink" title="5.2老年代"></a>5.2老年代</h2><p>主要存放应用程序中生命周期长的内存对象。老年代的对象比较稳定，所以 MajorGC 不会频繁执行。在进行 MajorGC 前一般都先进行了一次 MinorGC，使得有新生代的对象晋身入老年代，导致空间不够用时才触发。当无法找到足够大的连续空间分配给新创建的较大对象时也会提前触发一次 MajorGC 进行垃圾回收腾出空间。<br>MajorGC 采用标记清除算法：首先扫描一次所有老年代，标记出存活的对象，然后回收没有标记的对象。MajorGC 的耗时比较长，因为要扫描再回收。当老年代也满了装不下的时候，就会抛出 OOM（Out of Memory）异常。</p>
+<h2 id="5-3永久代"><a href="#5-3永久代" class="headerlink" title="5.3永久代"></a>5.3永久代</h2><p>指内存的永久保存区域，主要存放== Class 和 Meta（元数据）==的信息,Class 在被加载的时候被放入永久区域，它和和存放实例的区域不同,GC 不会在主程序运行期对永久区域进行清理。所以这也导致了永久代的区域会随着加载的 Class 的增多而胀满，最终抛出 OOM 异常。<br>永久代已经被移除，被一个称为“元数据区”（元空间）的区域所取代。元空间的本质和永久代类似，元空间与永久代之间最大的区别在于：==元空间并不在虚拟机中，而是使用本地内存==。因此，默认情况下，元空间的大小仅受本地内存限制。类的元数据放入 native memory, 字符串池和类的静态变量放入 java 堆中，这样可以加载多少类的元数据就不再由MaxPermSize 控制, 而由系统的实际可用空间来控制。</p>
 
           
         
@@ -345,7 +342,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -391,7 +388,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
